@@ -27,7 +27,8 @@ install:
   - docker ps -a
 
 script:
-  - docker-compose exec php_app /var/www/html/vendor/bin/codecept run
+  - sleep 60
+  - docker-compose exec php_app ./vendor/bin/codecept run
 
 after_script:
   - docker-compose down
