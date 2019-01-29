@@ -2,9 +2,14 @@ sudo: required
 services:
   - docker
 
+addons:
+  apt:
+    packages:
+      - docker-ce
+
 before_install:
-  - docker version
-  - docker-compose version
+  - docker --version
+  - docker-compose --version
   - docker-compose up --build -d
   - docker ps -a
 
