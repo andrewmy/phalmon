@@ -1,0 +1,10 @@
+actor: FunctionalTester
+modules:
+    enabled:
+        - \Helper\Functional
+        - Asserts
+        - Phalcon
+        - REST:
+            depends: Phalcon
+            part: Json
+        - MongoDb

@@ -1,0 +1,9 @@
+.idea
+/vendor/*
+/cache/*
+.git
+Dockerfile
+docker-compose.yml
+docker-compose.prod.yml
+/var/log/*
+.php_cs.cache

@@ -1,0 +1,6 @@
+actor: CliTester
+modules:
+    enabled:
+        - \Helper\Cli
+        - Cli
+        - MongoDb

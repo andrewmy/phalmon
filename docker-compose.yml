@@ -1,0 +1,71 @@
+version: '3.6'
+
+services:
+
+  php_app:
+    build:
+      context: .
+      target: app
+    restart: always
+    depends_on:
+      - db
+      - queue
+    links:
+      - db
+      - queue
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - DSN=mongodb://db:27017
+      - DBNAME=local
+      - APP_SECRET=phteven_phalmon
+      - APP_DEBUG=1
+      - QUEUE_HOST=queue
+      - QUEUE_PORT=11300
+      - APP_ENV=dev
+      - CORS_ORIGIN=*
+
+  php_worker:
+    build:
+      context: .
+      target: worker_dev
+    restart: always
+    depends_on:
+      - db
+      - queue
+      - php_app
+    links:
+      - db
+      - queue
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - DSN=mongodb://db:27017
+      - DBNAME=local
+      - APP_SECRET=phteven_phalmon
+      - APP_DEBUG=1
+      - QUEUE_HOST=queue
+      - QUEUE_PORT=11300
+      - APP_ENV=dev
+      - CORS_ORIGIN=*
+
+  db:
+    image: mvertes/alpine-mongo
+    volumes:
+      - dbvol:/data/db
+
+  nginx:
+    image: "evild/alpine-nginx:1.11.5"
+    links:
+      - php_app
+    volumes:
+      - ./:/var/www/html:ro
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+    ports:
+      - "1080:80"
+
+  queue:
+    image: petronetto/beanstalkd-alpine
+
+volumes:
+  dbvol:
