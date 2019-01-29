@@ -1,5 +1,7 @@
  # Phalmon
  
+ ![Travis CI build status](https://travis-ci.com/andrewmy/phalmon.svg?branch=master)
+ 
  This is a sample JSON REST API project on Phalcon PHP framework with MongoDB.
  
  ## Running
