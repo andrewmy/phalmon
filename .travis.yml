@@ -21,12 +21,14 @@ before_install:
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
   - docker --version
   - docker-compose --version
-  # now work
+
+install:
   - docker-compose up --build -d
   - docker ps -a
 
 script:
-  - docker-compose exec php_app ./vendor/bin/codecept run
+  - docker-compose exec php_app /var/www/html/vendor/bin/codecept run
 
 after_script:
   - docker-compose down
+  - docker-compose rm -f
